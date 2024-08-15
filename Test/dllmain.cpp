@@ -18,6 +18,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 }
 #define EXPORTING_DLL
 
+
 extern "C" __declspec(dllexport) int a(void){
     return 42;
 }
@@ -28,6 +29,9 @@ extern "C" __declspec(dllexport) LPCSTR b(int in) {
     else {
         return "B";
     }
+}
+extern "C" __declspec(dllexport) void GetMetadataSize() {
+
 }
 
 #ifndef INDLL_H

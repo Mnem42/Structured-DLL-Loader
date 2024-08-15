@@ -9,5 +9,7 @@
 
 // add headers that you want to pre-compile here
 #include "framework.h"
+#include <vector>
+#include <string>
 
 #endif //PCH_H

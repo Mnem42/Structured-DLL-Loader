@@ -2,52 +2,30 @@
 //
 
 #include <iostream>
-#include <map>
-#include <vector>
-#include <windows.h>
+#include "main.h"
 
-typedef std::vector < std::pair<HANDLE, bool>> LoadedFuncSet;
-
-//Mainly for safety
-class LoadedDLL {
-private:
-    HINSTANCE dll = NULL;
-    LoadedFuncSet functionsloaded;
-public:
-    LoadedDLL(LPCWSTR name, bool* error) {
-        dll = LoadLibrary(name);
-        *error = (dll == NULL); //sets flag to false if dll load failed 
-                                //(LoadLibrary returns NULL if there
-                                // was an error)
-    }
-    template<typename T> T collect_typed_funcptr(
-        LPCSTR name, uint8_t flags, bool* err)
-    {
-        HANDLE function = GetProcAddress(dll, name);
-
-        if (!function) { //GetProcAddress returns NULL if a function doesn't exist
-            *err = true;
-            return NULL;
-        }
-        else {
-            functionsloaded.push_back({ dll,name });
-            return (T)function;
-        }
-    }
-    LoadedFuncSet get_loaded_functions() {
-        return functionsloaded;
-    }
-    ~LoadedDLL() {
-        FreeLibrary(dll);
-        dll = NULL; 
-    }
-};
 typedef int(*tmp)();
 typedef LPCSTR(*tmp2)(int);
+
 int main()
 {
+    std::vector<std::string> files = DLLLoader::get_files_by_extension("./",".cfg");
+    std::cout << files.size() << "\n";
+    DLLLoader::FileLoader loader("test.txt");
+    DWORD existence = loader.check_file_existence();
+    if (existence != NULL) {
+        int tmpvar = loader.load_file();
+        loader.run_sanity_check();
+    }
+    else if (existence == ERROR_FILE_NOT_FOUND) {
+        std::cout << "Config file not found\n";
+    }
+    else {
+        std::cout << "Error " << existence;
+    }
+
     bool err;
-    LoadedDLL dll(L"Test.dll",&err);
+    DLLLoader::LoadedDLL dll(L"Test.dll",&err,2);
     if (!err) {
         std::cout << "Loaded\n";
         tmp a = dll.collect_typed_funcptr<tmp>("a", &err);
@@ -64,7 +42,9 @@ int main()
         std::cout << "Error detected\n";
     }
     dll.~LoadedDLL();
-    std::cout << "Hello World!\n";
+    while (true) {
+
+    }
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
