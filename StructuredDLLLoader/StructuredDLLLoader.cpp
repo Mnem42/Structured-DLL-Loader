@@ -9,6 +9,12 @@ typedef LPCSTR(*tmp2)(int);
 
 int main()
 {
+    std::pair<std::string, std::string> tmpstringpair;
+    DLLLoader::Parser::MetadataParser parser({"a:12.34F"});
+    tmpstringpair = parser.extract_kvp(0);
+    DLLLoader::Parser::ParsedEntry parsed=parser.parse_kvp(tmpstringpair);
+
+
     std::vector<std::string> files = DLLLoader::get_files_by_extension("./",".cfg");
     std::cout << files.size() << "\n";
     DLLLoader::FileLoader loader("test.txt");
