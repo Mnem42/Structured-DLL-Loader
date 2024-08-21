@@ -132,7 +132,8 @@
     <ClCompile Include="StructuredDLLLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="main.h" />
+    <ClInclude Include="dll_loader.h" />
+    <ClInclude Include="module_loader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
