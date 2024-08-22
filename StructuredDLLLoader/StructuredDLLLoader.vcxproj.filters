@@ -26,5 +26,8 @@
     <ClInclude Include="module_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="file_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

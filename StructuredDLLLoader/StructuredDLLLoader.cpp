@@ -4,6 +4,7 @@
 #include <iostream>
 #include "dll_loader.h"
 #include "module_loader.h"
+#include "file_loader.h"
 
 typedef int(*tmp)();
 typedef LPCSTR(*tmp2)(int);
